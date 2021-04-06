@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>趣柘主页</title>
+    <title>登陆成功</title>
 </head>
 <body>
-
+<a href="index.jsp"><font size="60px">登陆成功，回到主页</font></a>
 </body>
 </html>

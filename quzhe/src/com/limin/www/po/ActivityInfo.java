@@ -5,7 +5,9 @@ package com.limin.www.po;
  * @create 2021-04-02 20:27
  */
 public class ActivityInfo {
+
     private Integer id;
+    private String act_club;
     private String act_name;
     private String act_type;
     private String act_site;
@@ -21,6 +23,14 @@ public class ActivityInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAct_club() {
+        return act_club;
+    }
+
+    public void setAct_club(String act_club) {
+        this.act_club = act_club;
     }
 
     public String getAct_name() {
@@ -87,11 +97,9 @@ public class ActivityInfo {
         this.act_content = act_content;
     }
 
-    public ActivityInfo() {
-    }
-
-    public ActivityInfo(Integer id, String act_name, String act_type, String act_site, String act_time, int act_hour, String act_status, int act_maxpeople, String act_content) {
+    public ActivityInfo(Integer id, String act_club, String act_name, String act_type, String act_site, String act_time, int act_hour, String act_status, int act_maxpeople, String act_content) {
         this.id = id;
+        this.act_club = act_club;
         this.act_name = act_name;
         this.act_type = act_type;
         this.act_site = act_site;
@@ -102,18 +110,7 @@ public class ActivityInfo {
         this.act_content = act_content;
     }
 
-    @Override
-    public String toString() {
-        return "ActivityInfo{" +
-                "id=" + id +
-                ", act_name='" + act_name + '\'' +
-                ", act_type='" + act_type + '\'' +
-                ", act_site='" + act_site + '\'' +
-                ", act_time='" + act_time + '\'' +
-                ", act_hour=" + act_hour +
-                ", act_status='" + act_status + '\'' +
-                ", act_maxpeople=" + act_maxpeople +
-                ", act_content='" + act_content + '\'' +
-                '}';
+    public ActivityInfo() {
+
     }
 }

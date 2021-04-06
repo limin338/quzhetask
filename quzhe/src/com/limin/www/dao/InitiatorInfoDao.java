@@ -8,7 +8,7 @@ import java.sql.Connection;
  * @author amin
  * @create 2021-04-06 17:05
  */
-public interface InitiatorInfoDAO {
+public interface InitiatorInfoDao {
     /**
      * 根据主办方的姓名和密码获取信息
      * @param conn

@@ -9,7 +9,7 @@ public class InitiatorInfo {
     private String init_name;
     private String init_phonenumber;
     private String init_club;
-    private String club_introdution;
+    private String club_introduction;
     private String password;
 
     public String getPassword() {
@@ -53,11 +53,11 @@ public class InitiatorInfo {
     }
 
     public String getClub_introdution() {
-        return club_introdution;
+        return club_introduction;
     }
 
     public void setClub_introdution(String club_introdution) {
-        this.club_introdution = club_introdution;
+        this.club_introduction = club_introdution;
     }
 
     public InitiatorInfo(Integer id, String init_name, String init_phonenumber, String init_club, String club_introdution) {
@@ -65,7 +65,7 @@ public class InitiatorInfo {
         this.init_name = init_name;
         this.init_phonenumber = init_phonenumber;
         this.init_club = init_club;
-        this.club_introdution = club_introdution;
+        this.club_introduction = club_introdution;
     }
 
     public InitiatorInfo() {
@@ -84,7 +84,7 @@ public class InitiatorInfo {
                 ", init_name='" + init_name + '\'' +
                 ", init_phonenumber='" + init_phonenumber + '\'' +
                 ", init_club='" + init_club + '\'' +
-                ", club_introdution='" + club_introdution + '\'' +
+                ", club_introdution='" + club_introduction + '\'' +
                 '}';
     }
 }

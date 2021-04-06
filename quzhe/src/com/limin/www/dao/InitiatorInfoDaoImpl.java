@@ -8,12 +8,12 @@ import java.sql.Connection;
  * @author amin
  * @create 2021-04-06 17:26
  */
-public class InitiatorInfoDAOImpl extends BaseDao implements InitiatorInfoDAO{
+public class InitiatorInfoDaoImpl extends BaseDao implements InitiatorInfoDao {
 
 
     @Override
     public InitiatorInfo getInitiator(Connection conn, InitiatorInfo initiatorInfo) {
-        String sql = "select * from t_initiaior where init_name = ? and password = ?";
+        String sql = "select * from t_initiator where init_name = ? and password = ?";
         initiatorInfo = getInstance(InitiatorInfo.class,sql,initiatorInfo.getInit_name(),initiatorInfo.getPassword());
         return initiatorInfo;
     }
@@ -27,7 +27,7 @@ public class InitiatorInfoDAOImpl extends BaseDao implements InitiatorInfoDAO{
 
     @Override
     public void update(Connection conn, InitiatorInfo initiatorInfo) {
-        String sql = "update t_initiator set init_name = ? and init_phonenumber = ? where init_club = ?";
-        update(conn,sql,initiatorInfo.getInit_name(),initiatorInfo.getInit_phonenumber(),initiatorInfo.getInit_club());
+        String sql = "update t_initiator set init_name = ?,init_phonenumber = ?,password = ? where init_club = ?";
+        update(conn,sql,initiatorInfo.getInit_name(),initiatorInfo.getInit_phonenumber(),initiatorInfo.getPassword(),initiatorInfo.getInit_club());
     }
 }

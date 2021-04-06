@@ -11,6 +11,6 @@
     <title>注册成功页面</title>
 </head>
 <body>
-<a href="login_success.jsp"><font size="60px">注册成功</font></a>
+<a href="login2.jsp"><font size="60px">注册成功，进入登陆页面</font></a>
 </body>
 </html>

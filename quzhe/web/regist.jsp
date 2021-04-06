@@ -16,8 +16,9 @@
     </script>
 </head>
 <body>
-<form name="input" action="regist_success.jsp" method="post">
-    <input type="hidden" name="action" value="login">
+<form name="input" action="studentServlet" method="post">
+    <!--隐藏域-->
+    <input type="hidden" name="action" value="regist"/>
     <h1 align="center">注册账号</h1>
     <table  align="center" border="1" width="300" cellspacing="0">
         <tr>

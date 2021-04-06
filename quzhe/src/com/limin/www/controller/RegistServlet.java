@@ -30,13 +30,13 @@ public class RegistServlet extends HttpServlet{
 
 
         if(studentInfoService.existsStudentNumber(studentnumber)){
-            System.out.println("学号已存在");
+//            req.setAttribute("msg","该用户已注册");
             req.getRequestDispatcher("/regist.jsp").forward(req,resp);
         }else{
             //保存到数据库
             studentInfoService.regist(new StudentInfo(null,studentnumber,
                     studentname,password,grade,phonenumber,0));
-            req.getRequestDispatcher("/login.jsp").forward(req,resp);
+            req.getRequestDispatcher("/regist_success.jsp").forward(req,resp);
         }
     }
 }
