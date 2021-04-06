@@ -10,6 +10,15 @@ public class InitiatorInfo {
     private String init_phonenumber;
     private String init_club;
     private String club_introdution;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -61,6 +70,11 @@ public class InitiatorInfo {
 
     public InitiatorInfo() {
 
+    }
+
+    public InitiatorInfo(String init_name, String password) {
+        this.init_name = init_name;
+        this.password = password;
     }
 
     @Override

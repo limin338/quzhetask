@@ -12,12 +12,19 @@ public interface StudentInfoService {
      * 注册
      * @param studentInfo
      */
-    public void registStudent(StudentInfo studentInfo);
+    void regist(StudentInfo studentInfo);
 
     /**
      * 登陆
      * @param studentInfo
-     * @return
+     * @return 返回null登陆失败
      */
-    public StudentInfo login(StudentInfo studentInfo);
+    StudentInfo login(StudentInfo studentInfo);
+
+    /**
+     * 检查学生学号是否已经存在
+     * @param studentnumber
+     * @return true 该学号已存在，false 该学号可进行注册
+     */
+    boolean existsStudentNumber(String studentnumber);
 }

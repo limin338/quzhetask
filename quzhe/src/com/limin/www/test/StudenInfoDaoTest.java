@@ -19,11 +19,12 @@ public class StudenInfoDaoTest {
         Connection conn = JdbcUtils.getConnection();
 
         StudentInfo studentInfo = new StudentInfo();
-      studentInfo.setStu_number("1003");
+      studentInfo.setStu_number("1001");
       studentInfo.setStu_name("wangwu");
       studentInfo.setPassword("13579");
       studentInfo.setGrade("软件工程2班");
       studentInfo.setPhonenumber("16574325435");
+      studentInfo.setHour(0);
 
       StudentInfoDao studentInfoDao = new StudentInfoDaoImpl();
       studentInfoDao.saveStudent(conn,studentInfo);

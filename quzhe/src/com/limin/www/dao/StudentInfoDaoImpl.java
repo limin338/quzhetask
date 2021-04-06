@@ -26,9 +26,9 @@ public class StudentInfoDaoImpl extends BaseDao implements StudentInfoDao {
 
     @Override
     public void saveStudent(Connection conn, StudentInfo studentInfo) {
-        String sql = "insert into t_stuinfo(stu_number,stu_name,password,grade,phonenumber)values(?,?,?,?,?)";
+        String sql = "insert into t_stuinfo(stu_number,stu_name,password,grade,phonenumber,hour)values(?,?,?,?,?,?)";
         update(conn,sql,studentInfo.getStu_number(),studentInfo.getStu_name(),studentInfo.getPassword()
-        ,studentInfo.getGrade(),studentInfo.getPhonenumber());
+        ,studentInfo.getGrade(),studentInfo.getPhonenumber(),studentInfo.getHour());
     }
 
     @Override

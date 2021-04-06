@@ -26,12 +26,14 @@
 <table align="center"  width="300" cellspacing="0">
     <tr>
         <th>
-            <form name="input" action="regist.jsp" method="post">
+            <form action="loginServlet" method="post">
                 <div><font face="宋体" color="#1e90ff" size="60px">欢迎来到趣柘校园</font>
-                    <h1 align="center"><font color="black" size="50px">登陆</font></h1>
-                    <span><font color="black">学号:<input type="text" value=""/><br/><br/></font></span>
-                    <span><font color="black">密码:<input type="password" value=""/><br/></font></span><br/>
-                    <span><input type="submit" value=""></span>
+                    <h1 align="center"><font color="black" size="50px">登陆  </font></h1>
+                    <span><font color="black">学号:<input type="text" name="studentnumber" value=""/><br/><br/></font></span>
+                    <span><font color="black">密码:<input type="password" name="password" value=""/><br/></font></span><br/>
+                    <span><input type="submit" value="登陆"></span>
+                    <a href="regist.jsp">学生注册</a>
+                    <a href="regist2.jsp">主办方注册</a>
                     </div>
                 <br>
             </form>

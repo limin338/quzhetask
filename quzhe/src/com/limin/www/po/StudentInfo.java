@@ -8,7 +8,7 @@ public class StudentInfo {
     private  String password;
     private String grade;
     private String phonenumber;
-    private long hour;
+    private int hour;
 
     public Integer getId() {
         return id;
@@ -58,7 +58,7 @@ public class StudentInfo {
         this.phonenumber = phonenumber;
     }
 
-    public long getHour() {
+    public int getHour() {
         return hour;
     }
 
@@ -90,5 +90,14 @@ public class StudentInfo {
         this.grade = grade;
         this.phonenumber = phonenumber;
         this.hour = hour;
+    }
+
+    public StudentInfo(String stu_number, String password) {
+        this.stu_number = stu_number;
+        this.password = password;
+    }
+
+    public StudentInfo(String stu_number) {
+        this.stu_number = stu_number;
     }
 }
