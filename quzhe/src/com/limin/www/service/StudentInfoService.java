@@ -1,5 +1,6 @@
 package com.limin.www.service;
 
+import com.limin.www.po.ActivityInfo;
 import com.limin.www.po.StudentInfo;
 
 /**
@@ -7,24 +8,24 @@ import com.limin.www.po.StudentInfo;
  * @create 2021-04-03 18:53
  */
 public interface StudentInfoService {
-
     /**
-     * 注册
+     * 注册学生用户
      * @param studentInfo
      */
-    void regist(StudentInfo studentInfo);
+    void registStudent(StudentInfo studentInfo);
 
     /**
      * 登陆
      * @param studentInfo
-     * @return 返回null登陆失败
+     * @return
      */
     StudentInfo login(StudentInfo studentInfo);
 
     /**
-     * 检查学生学号是否已经存在
-     * @param studentnumber
-     * @return true 该学号已存在，false 该学号可进行注册
+     * 检查该学号是否可用
+     * @param stunumber
+     * @return 返回true表示学号已存在，返回false表示可注册
      */
-    boolean existsStudentNumber(String studentnumber);
+    boolean existsStuNumber(String stunumber);
+
 }

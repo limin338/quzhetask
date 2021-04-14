@@ -1,63 +1,59 @@
 package com.limin.www.util;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
+import java.util.function.DoubleToIntFunction;
 
 /**
  * @author amin
  * @create 2021-04-01 18:38
  */
 public class JdbcUtils {
-    /**
-     * 工具类一般情况下构造方法建议私有化，因为工具类根本不用new对象，
-     * 因为工具类的方法都是静态的，直接采用类名调用
-     */
-    private JdbcUtils(){}
 
-    /**
-     * 只要调了getConnection方法，就要用类JdbcUtils去调，只要调了类JdbcUtils，就会执行一次
-     * 静态代码块在类加载时执行，并且只执行一次
-     */
+    private static DruidDataSource dataSource;
+
     static{
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+            Properties properties = new Properties();
+            //读取jdbc.properties属性配置文件
+            InputStream inputStream = JdbcUtils.class.getClassLoader().getResourceAsStream("jdbc.properities");
+            //从流中加载数据
+            properties.load(inputStream);
+            //创建数据库连接池
+            dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+
     /**
      * 获取数据库连接池中的连接
-     * @return 连接对象
-     * @throws SQLException
+     * @return 如果返回null，说明获取连接失败<br/>有值就是获取连接成功
      */
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/quzhe?useSSL=false&serverTimezone=Asia/Shanghai","root","0111");
+    public static Connection getConnection(){
+        Connection conn = null;
+
+        try {
+            return conn = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-
     /**
-     * 关闭连接
-     * @param conn 连接对象
-     * @param ps 数据库操作对象
-     * @param rs 结果集
+     * 关闭连接，放回数据库连接池
+     * @param conn
      */
-    public static void close(Connection conn, Statement ps, ResultSet rs){
-        if(rs != null){
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(ps != null){
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
+    public static void close(Connection conn){
         if(conn != null){
             try {
                 conn.close();

@@ -11,35 +11,31 @@ import java.sql.Connection;
  */
 public interface StudentInfoDao {
 
-    /**
-     * 根据StudentInfo对象中的学号和密码获取学生信息
-     * @param conn
-     * @param studentInfo
-     * @return StudentInfo数据库中有记录 null无记录
-     */
-    StudentInfo getStudent(Connection conn,StudentInfo studentInfo);
-
-//    /**
-//     * 根据StudentInfo对象中的学号从数据库中获取一条记录
-//     * @param conn
-//     * @param studentInfo
-//     * @return true数据库中有记录 false数据库中无此记录
-//     */
-//    boolean checkStudentNumber(Connection conn,StudentInfo studentInfo);
+    //注册操作时
 
     /**
-     * 插入StudentInfo对象
-     * @param conn
-     * @param studentInfo
+     * 根据学生学号查询学生信息
+     * @param stuNumber 学生学号
+     * @return 如果返回null，说明没有该学生。反之说明该学生已注册
      */
-    void saveStudent(Connection conn,StudentInfo studentInfo);
+    StudentInfo queryStudentByNumber(String stuNumber);
 
     /**
-     * 更新
-     * @param conn
+     * 将学生信息保存到数据库中
      * @param studentInfo
+     * @return
      */
-    void update(Connection conn,StudentInfo studentInfo);
+    int saveStudent(StudentInfo studentInfo);
+
+    //登陆时
+    /**
+     * 根据学生输入的学号和密码查询学生信息
+     * @param stunumber
+     * @param password
+     * @return 如果返回null，说明学号或密码错误。
+     */
+    StudentInfo queryStudentByNumberAndPassword(String stunumber,String password);
+
 
 
 }

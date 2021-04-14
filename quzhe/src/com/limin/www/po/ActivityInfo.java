@@ -1,5 +1,9 @@
 package com.limin.www.po;
 
+import java.time.LocalDate;
+
+
+
 /**
  * @author amin
  * @create 2021-04-02 20:27
@@ -13,9 +17,27 @@ public class ActivityInfo {
     private String act_site;
     private String act_time;
     private int act_hour;
-    private String act_status;
-    private int act_maxpeople;
+    private String act_status = "待审核";
+    private long act_maxpeople;
     private String act_content;
+    private String img_path="static/img/quzhe.jpg";
+
+    @Override
+    public String toString() {
+        return "ActivityInfo{" +
+                "id=" + id +
+                ", act_club='" + act_club + '\'' +
+                ", act_name='" + act_name + '\'' +
+                ", act_type='" + act_type + '\'' +
+                ", act_site='" + act_site + '\'' +
+                ", act_time=" + act_time +
+                ", act_hour=" + act_hour +
+                ", act_status='" + act_status + '\'' +
+                ", act_maxpeople=" + act_maxpeople +
+                ", act_content='" + act_content + '\'' +
+                ", img_path='" + img_path + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -78,14 +100,16 @@ public class ActivityInfo {
     }
 
     public void setAct_status(String act_status) {
-        this.act_status = act_status;
+        if (act_status == null) {
+            this.act_status = act_status;
+        }
     }
 
-    public int getAct_maxpeople() {
+    public long getAct_maxpeople() {
         return act_maxpeople;
     }
 
-    public void setAct_maxpeople(int act_maxpeople) {
+    public void setAct_maxpeople(long act_maxpeople) {
         this.act_maxpeople = act_maxpeople;
     }
 
@@ -97,7 +121,28 @@ public class ActivityInfo {
         this.act_content = act_content;
     }
 
-    public ActivityInfo(Integer id, String act_club, String act_name, String act_type, String act_site, String act_time, int act_hour, String act_status, int act_maxpeople, String act_content) {
+    public String getImg_path() {
+        return img_path;
+    }
+
+
+    public ActivityInfo(Integer id) {
+        this.id = id;
+    }
+
+    public ActivityInfo(Integer id, String act_status) {
+        this.id = id;
+        this.act_status = act_status;
+    }
+
+    public void setImg_path(String img_path) {
+        //要求给定的图片路径不能为空
+        if(img_path == null && !"".equals(img_path)){
+            this.img_path = img_path;
+        }
+    }
+
+    public ActivityInfo(Integer id, String act_club, String act_name, String act_type, String act_site, String act_time, int act_hour, String act_status, int act_maxpeople, String act_content, String img_path) {
         this.id = id;
         this.act_club = act_club;
         this.act_name = act_name;
@@ -105,12 +150,21 @@ public class ActivityInfo {
         this.act_site = act_site;
         this.act_time = act_time;
         this.act_hour = act_hour;
-        this.act_status = act_status;
+        if (act_status == null) {
+            this.act_status = act_status;
+        }
         this.act_maxpeople = act_maxpeople;
         this.act_content = act_content;
+        //要求给定的图片路径不能为空
+        if(img_path == null && !"".equals(img_path)){
+            this.img_path = img_path;
+        }
+
     }
 
     public ActivityInfo() {
 
     }
+
+
 }

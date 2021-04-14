@@ -21,33 +21,39 @@ public class InitiatorInfoDaoTest {
         Connection conn = JdbcUtils.getConnection();
         InitiatorInfo initiatorInfo = new InitiatorInfo();
         initiatorInfo.setInit_name("小李");
-        initiatorInfo.setInit_phonenumber("18976543210");
-        initiatorInfo.setPassword("000000");
-        initiatorInfo.setInit_club("校园安全协会");
-        initiatorInfo.setClub_introdution("传递校园安全知识");
+        initiatorInfo.setInit_phonenumber("15899263510");
+        initiatorInfo.setPassword("654321");
+        initiatorInfo.setInit_club("校安协");
+        initiatorInfo.setClub_introdution("宣传校园安全知识");
 
         InitiatorInfoDao initiatorInfoDao = new InitiatorInfoDaoImpl();
-        initiatorInfoDao.saveInitiator(conn,initiatorInfo);
+        initiatorInfoDao.saveInitiator(initiatorInfo);
     }
 
     @Test
-    public void getInitiatorTest() throws SQLException {
-        Connection conn = JdbcUtils.getConnection();
-        InitiatorInfo initiatorInfo = new InitiatorInfo("小李","000000");
-
+    public void queryInitiatorByNameAndPassword(){
         InitiatorInfoDao initiatorInfoDao = new InitiatorInfoDaoImpl();
-        System.out.println(initiatorInfoDao.getInitiator(conn,initiatorInfo));
+        System.out.println(initiatorInfoDao.queryInitiatorByNameAndPassword("zxx","123123","审核通过"));
     }
-
-    @Test
-    public void updateInitiatorTest() throws SQLException {
-        Connection conn = JdbcUtils.getConnection();
-        InitiatorInfo initiatorInfo = new InitiatorInfo();
-        initiatorInfo.setInit_name("小王");
-        initiatorInfo.setInit_phonenumber("17832754362");
-        initiatorInfo.setPassword("111111");
-        initiatorInfo.setInit_club("校园安全协会");
-        InitiatorInfoDao initiatorInfoDao = new InitiatorInfoDaoImpl();
-        initiatorInfoDao.update(conn,initiatorInfo);
-    }
+//
+//    @Test
+//    public void getInitiatorTest() throws SQLException {
+//        Connection conn = JdbcUtils.getConnection();
+//        InitiatorInfo initiatorInfo = new InitiatorInfo("小李","000000");
+//
+//        InitiatorInfoDao initiatorInfoDao = new InitiatorInfoDaoImpl();
+//        System.out.println(initiatorInfoDao.getInitiator(conn,initiatorInfo));
+//    }
+//
+//    @Test
+//    public void updateInitiatorTest() throws SQLException {
+//        Connection conn = JdbcUtils.getConnection();
+//        InitiatorInfo initiatorInfo = new InitiatorInfo();
+//        initiatorInfo.setInit_name("小王");
+//        initiatorInfo.setInit_phonenumber("17832754362");
+//        initiatorInfo.setPassword("111111");
+//        initiatorInfo.setInit_club("校园安全协会");
+//        InitiatorInfoDao initiatorInfoDao = new InitiatorInfoDaoImpl();
+//        initiatorInfoDao.update(conn,initiatorInfo);
+//    }
 }

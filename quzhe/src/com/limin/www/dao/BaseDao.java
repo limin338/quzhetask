@@ -1,6 +1,11 @@
 package com.limin.www.dao;
 
 import com.limin.www.util.JdbcUtils;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 
 import java.lang.reflect.Field;
@@ -15,167 +20,85 @@ import java.util.List;
  */
 public abstract class BaseDao {
 
+    //使用DBUtils操作数据库
+
+    private QueryRunner queryRunner = new QueryRunner();
+
     /**
-     * 增删改
-     * @param conn
+     * update 用来执行增删改查操作
      * @param sql
      * @param args
+     * @return 返回-1，说明执行失败<br/>返回其他表示影响的行数
      */
-    public void update(Connection conn,String sql,Object...args){
-        PreparedStatement ps = null;
-
+    public int update(String sql,Object...args){
+        Connection connection = JdbcUtils.getConnection();
         try {
-            ps = conn.prepareStatement(sql);
-            for(int i = 0;i < args.length;i++){
-                ps.setObject(i + 1,args[i]);
-            }
-            ps.execute();
+            return queryRunner.update(connection,sql,args);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-            JdbcUtils.close(null,ps,null);
+            JdbcUtils.close(connection);
         }
+        return -1;
     }
 
     /**
-     * 查询操作，返回表中的一条记录
-     * @param clazz 返回的对象类型
+     * 查询返回一个javaBean的sql语句
+     * @param type 返回的对象类型
      * @param sql 执行的sql语句
      * @param args sql对应的参数值
      * @param <T> 返回的类型的泛型
      * @return
      */
-    public <T> T getInstance(Class<T> clazz,String sql,Object...args){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
+    public <T>T queryForOne(Class<T> type,String sql,Object...args){
+        Connection connection = null;
         try {
-            //获取数据库连接
-            conn = JdbcUtils.getConnection();
-            //预编译sql语句，得到PreparedStatement对象
-            ps = conn.prepareStatement(sql);
-            //填充占位符
-            for(int i = 0;i<args.length;i++){
-                ps.setObject(i + 1,args[i]);
-            }
-            //执行executeQuery（），得到结果集
-            rs = ps.executeQuery();
-
-            //得到结果集的元数据
-            ResultSetMetaData rsmd = rs.getMetaData();
-
-            //通过ResultSetMetaData得到columnCount，columnLabel；通过ResultSet得到列值
-            int columnCount = rsmd.getColumnCount();
-            if (rs.next()){
-                T t = clazz.newInstance();
-                for (int i = 0; i < columnCount; i++) {//遍历每一个列
-                    //获取列值
-                    Object colummVal = rs.getObject(i + 1);
-                    //获取列的别名：列的别名，使用类的属性名充当
-                    String columnLabel = rsmd.getColumnLabel(i + 1);
-                    //使用反射，给对象的相应属性赋值
-                    Field field = clazz.getDeclaredField(columnLabel);
-                    field.setAccessible(true);
-                    field.set(t, colummVal);
-                }
-
-                return t;
-            }
-
-        } catch (Exception e) {
+            connection = JdbcUtils.getConnection();
+            return queryRunner.query(connection,sql,new BeanHandler<T>(type),args);
+        } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-            JdbcUtils.close(conn,ps,rs);
+            JdbcUtils.close(connection);
         }
-
         return null;
     }
 
     /**
-     * 查询操作，返回表中多条记录构成的集合
-     * @param clazz
+     * 返回多个javabean的sql语句
+     * @param type
      * @param sql
      * @param args
      * @param <T>
      * @return
      */
-    public  <T> List<T> getForList(Class<T> clazz,String sql,Object...args){
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
+    public <T>List<T> queryForList(Class<T> type,String sql,Object...args){
+        Connection connection = null;
         try {
-            //获取数据库连接
-            conn = JdbcUtils.getConnection();
-            //预编译sql语句，得到PreparedStatement对象
-            ps = conn.prepareStatement(sql);
-            //填充占位符
-            for(int i = 0;i<args.length;i++){
-                ps.setObject(i + 1,args[i]);
-            }
-            //执行executeQuery（），得到结果集
-            rs = ps.executeQuery();
-
-            //得到结果集的元数据
-            ResultSetMetaData rsmd = rs.getMetaData();
-
-            //通过ResultSetMetaData得到columnCount，columnLabel；通过ResultSet得到列值
-            int columnCount = rsmd.getColumnCount();
-            while (rs.next()){
-                T t = clazz.newInstance();
-
-                //创建集合对象
-                ArrayList<T> list = new ArrayList<>();
-                for (int i = 0; i < columnCount; i++) {//遍历每一个列,给t对象指定的属性赋值
-                    //获取列值
-                    Object colummVal = rs.getObject(i + 1);
-                    //获取列的别名：列的别名，使用类的属性名充当
-                    String columnLabel = rsmd.getColumnLabel(i + 1);
-                    //使用反射，给对象的相应属性赋值
-                    Field field = clazz.getDeclaredField(columnLabel);
-                    field.setAccessible(true);
-                    field.set(t, colummVal);
-                }
-
-                list.add(t);
-            }
-
-        } catch (Exception e) {
+            connection = JdbcUtils.getConnection();
+            return queryRunner.query(connection,sql,new BeanListHandler<>(type),args);
+        } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-            JdbcUtils.close(conn,ps,rs);
+            JdbcUtils.close(connection);
         }
-
         return null;
     }
 
     /**
-     * 用于查询特殊值的通用方法
-     * @param conn
-     * @param sql
-     * @param args
-     * @param <E>
+     * 执行返回一行一列的sql语句
+     * @param sql 执行的sql语句
+     * @param args sql对应的参数值
      * @return
      */
-    public <E> E getValue(Connection conn,String sql,Object...args){
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
+    public Object queryForSingleValue(String sql,Object...args){
+        Connection connection = null;
         try {
-            ps = conn.prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                ps.setObject(i + 1,args[i]);
-            }
-
-            rs = ps.executeQuery();
-            if(rs.next()){
-                return (E)rs.getObject(1);
-            }
-        } catch (SQLException e) {
+            connection = JdbcUtils.getConnection();
+            return queryRunner.query(connection,sql,new ScalarHandler(),args);
+        } catch (Exception e) {
             e.printStackTrace();
         }finally{
-            JdbcUtils.close(null,ps,rs);
+            JdbcUtils.close(connection);
         }
         return null;
     }
