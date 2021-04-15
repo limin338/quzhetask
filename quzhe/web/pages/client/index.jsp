@@ -14,13 +14,13 @@
       <!--写base标签，永远固定相对路径跳转的结果-->
       <%--<base href="http://index.jsp/">--%>
     <script type="text/javascript">
-      $(function () {
-          //绑定单击事件
-          $("button.add").click(function () {
-              var itemid = $(this).attr(itemid);
-              location.href="http://localhost:8080/stuActServlet?action=add&id=itemid";
-          })
-      })
+      // $(function () {
+      //     //绑定单击事件
+      //     $("button.add").click(function () {
+      //         var itemid = $(this).attr(itemid);
+      //         location.href="http://localhost:8080/stuActServlet?action=add&id=itemid";
+      //     })
+      // })
 
       function tianjia() {
           window.location.href="${pageContext.request.contextPath}/stuActServlet?action=add";
@@ -127,7 +127,7 @@
             <span>${activity.act_content}</span>
           </div>
           <span><button onclick="tianjia()">报名</button></span>
-          <span><button itemid="${activity.id}" class="add">报名</button> </span>
+          <%--<span><button itemid="${activity.id}" class="add">报名</button> </span>--%>
         </div>
       </div>
 
